@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import DisplaySeason from "./DisplaySeason";
 
 // const App = () => {
 //     // get current location
@@ -39,11 +40,7 @@ class App extends React.Component {
     render() {
         if (this.state.lat && this.state.long && !this.state.errorMessage) {
             return (
-                <div>
-                    langitude: {this.state.lat}
-                    <br />
-                    longitude: {this.state.long}
-                </div>
+                <DisplaySeason lat={this.state.lat} long={this.state.long} />
             );
         }
         if (!this.state.lat && !this.state.long && this.state.errorMessage) {
