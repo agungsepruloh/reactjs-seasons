@@ -12,12 +12,10 @@ import ReactDOM from "react-dom";
 // };
 
 class App extends React.Component {
-    constructor(props) {
-        super(props);
+    // THIS IS THE ONLY TIME we do direct assignment
+    state = { lat: null, long: null, errorMessage: "" };
 
-        // THIS IS THE ONLY TIME we do direct assignment
-        this.state = { lat: null, long: null };
-
+    componentDidMount() {
         // get current location
         window.navigator.geolocation.getCurrentPosition(
             position => {
@@ -31,19 +29,28 @@ class App extends React.Component {
                 // this.state.lat = position.coords.latitude
                 // this.state.long = position.coords.longitude;
             },
-            err => console.log(err)
+            err => {
+                this.setState({ errorMessage: err.message });
+            }
         );
     }
 
     // it is a must for you to define render method
     render() {
-        return (
-            <div>
-                Latitude: {this.state.lat}
-                <br />
-                Longitude: {this.state.long}
-            </div>
-        );
+        if (this.state.lat && this.state.long && !this.state.errorMessage) {
+            return (
+                <div>
+                    langitude: {this.state.lat}
+                    <br />
+                    longitude: {this.state.long}
+                </div>
+            );
+        }
+        if (!this.state.lat && !this.state.long && this.state.errorMessage) {
+            return <div>error: {this.state.errorMessage}</div>;
+        }
+
+        return <div>Loading!</div>;
     }
 }
 
