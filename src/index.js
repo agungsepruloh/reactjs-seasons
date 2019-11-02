@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import DisplaySeason from "./DisplaySeason";
+import Spinner from "./Spinner";
 
 // const App = () => {
 //     // get current location
@@ -47,7 +48,7 @@ class App extends React.Component {
             return <div>error: {this.state.errorMessage}</div>;
         }
 
-        return <div>Loading!</div>;
+        return <Spinner message="Please accept location request!" />;
     }
 }
 
