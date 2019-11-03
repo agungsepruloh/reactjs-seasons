@@ -15,7 +15,12 @@ import Spinner from "./Spinner";
 
 class App extends React.Component {
     // THIS IS THE ONLY TIME we do direct assignment
-    state = { lat: null, long: null, errorMessage: "" };
+    state = {
+        lat: null,
+        long: null,
+        errorMessage: "",
+        time: new Date().toLocaleTimeString()
+    };
 
     componentDidMount() {
         // get current location
@@ -35,20 +40,36 @@ class App extends React.Component {
                 this.setState({ errorMessage: err.message });
             }
         );
+
+        // get current time and will be update every second
+        setInterval(() => {
+            this.setState({
+                time: new Date().toLocaleTimeString()
+            });
+        }, 1000);
     }
 
-    // it is a must for you to define render method
-    render() {
+    getDisplay() {
         if (this.state.lat && this.state.long && !this.state.errorMessage) {
             return (
-                <DisplaySeason lat={this.state.lat} long={this.state.long} />
+                <DisplaySeason
+                    lat={this.state.lat}
+                    long={this.state.long}
+                    time={this.state.time}
+                />
             );
         }
+
         if (!this.state.lat && !this.state.long && this.state.errorMessage) {
             return <div>error: {this.state.errorMessage}</div>;
         }
 
         return <Spinner message="Please accept location request!" />;
+    }
+
+    // it is a must for you to define render method
+    render() {
+        return this.getDisplay();
     }
 }
 

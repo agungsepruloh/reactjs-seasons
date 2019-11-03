@@ -27,7 +27,11 @@ const DisplaySeason = props => {
     return (
         <div className={`display-season ${season}`}>
             <i className={`icon-left massive ${iconName} icon`}></i>
-            <h1>{text}</h1>
+            <h1>
+                {text}
+                <br />
+                {props.time}
+            </h1>
             <i className={`icon-right massive ${iconName} icon`}></i>
         </div>
     );
